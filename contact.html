@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KE7J2XD914"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KE7J2XD914');
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Book a consultation with Cook Smart Solutions for your A/V, networking, or custom PC project." />
+    <meta name="theme-color" content="#05070d" />
+    <title>Contact & Booking — Cook Smart Solutions</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="container-x nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">CS</span>
+                <span>Cook Smart Solutions</span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a class="nav-link" href="index.html">Home</a></li>
+                <li><a class="nav-link" href="services.html">Services</a></li>
+                <li><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-cta"><a class="btn btn-primary active" href="contact.html">Book Consult <span class="arrow">→</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="hero-orb o2" style="top:-220px; left:-180px; width:420px; height:420px; opacity:0.4;"></div>
+        <div class="hero-orb o1" style="top:-100px; right:-180px; width:420px; height:420px; opacity:0.4;"></div>
+        <div class="container-x">
+            <div class="reveal"><span class="eyebrow">Book a Consultation</span></div>
+            <h1 class="reveal" data-delay="100">Start your <span class="gradient-text">project.</span></h1>
+            <p class="reveal" data-delay="200">Schedule a consultation to discuss your A/V, networking, or custom PC needs. We'll get back to you shortly to confirm.</p>
+        </div>
+    </header>
+
+    <section class="section" style="padding-top: 1rem;">
+        <div class="container-x">
+            <div class="form-card reveal">
+                <p id="formMessage" style="text-align:center; margin-bottom:2rem; color: var(--text-muted);">
+                    Fill out the form below and we'll reach out to confirm your consultation.
+                </p>
+
+                <form id="contactForm" method="POST">
+                    <div class="form-grid-2">
+                        <div class="form-row" style="margin-bottom:0;">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-input" id="firstName" name="FirstName" required>
+                        </div>
+                        <div class="form-row" style="margin-bottom:0;">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-input" id="lastName" name="LastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="margin-top: 1.25rem;">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" name="Email" required placeholder="you@example.com">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phone" name="Phone" placeholder="(555) 123-4567" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="appointmentDate" class="form-label">Preferred Consultation Date</label>
+                        <input type="text" class="form-input" id="appointmentDate" name="AppointmentDate" placeholder="Select a date…" required readonly>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="description" class="form-label">Description of Work Requested</label>
+                        <textarea class="form-textarea" id="description" name="DescriptionOfWork" rows="4" placeholder="Briefly describe your project (e.g., outdoor TV install, home network upgrade, custom gaming PC)…" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top: 0.5rem;">
+                        Submit Request <span class="arrow">→</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container-x footer-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">CS</span>
+                <span>Cook Smart Solutions</span>
+            </a>
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <p class="footer-copy">© Cook Smart Solutions 2025</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // ——— Flatpickr (weekends only) ———
+        flatpickr("#appointmentDate", {
+            minDate: "today",
+            dateFormat: "Y-m-d",
+            disable: [ function(d) { const g = d.getDay(); return g >= 1 && g <= 5; } ],
+            locale: { firstDayOfWeek: 1 }
+        });
+
+        // ——— Form submit ———
+        document.getElementById('contactForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = {};
+            new FormData(form).forEach((v, k) => data[k] = v);
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            const messageElement = document.getElementById('formMessage');
+
+            submitButton.disabled = true;
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = 'Sending…';
+            messageElement.innerHTML = '<div class="alert alert-info">Processing request…</div>';
+
+            const API_URL = 'https://wh5hnj84v9.execute-api.us-east-1.amazonaws.com/Prod/contact';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok || response.status === 201) {
+                    messageElement.innerHTML = '<div class="alert alert-success">Thank you! Your consultation request has been submitted. We\'ll contact you shortly.</div>';
+                    form.reset();
+                } else {
+                    let errorText = await response.text();
+                    let errorMessage = `Submission error (status ${response.status}).`;
+                    try {
+                        const errorJson = JSON.parse(errorText);
+                        if (errorJson && errorJson.message) errorMessage = `API error: ${errorJson.message}`;
+                    } catch (e) {
+                        errorMessage = `Server error (${response.status}): ${errorText.substring(0, 100)}…`;
+                    }
+                    messageElement.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
+                    console.error('API Error:', errorText);
+                }
+            } catch (error) {
+                messageElement.innerHTML = `<div class="alert alert-danger">Network error. Please check your connection and try again.</div>`;
+                console.error('Fetch error:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            }
+        });
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

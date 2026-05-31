@@ -67,6 +67,10 @@
                 </p>
 
                 <form id="contactForm" method="POST">
+                    <!-- Honeypot: real users never see or fill this -->
+                    <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+                        <input type="text" name="website" id="hpWebsite" autocomplete="off" tabindex="-1">
+                    </div>
                     <div class="form-grid-2">
                         <div class="form-row" style="margin-bottom:0;">
                             <label for="firstName" class="form-label">First Name</label>
@@ -98,7 +102,16 @@
                         <textarea class="form-textarea" id="description" name="DescriptionOfWork" rows="4" placeholder="Briefly describe your project (e.g., outdoor TV install, home network upgrade, custom gaming PC)…" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top: 0.5rem;">
+                    <div class="form-row captcha-row">
+                        <label class="captcha-check" for="humanCheck">
+                            <input type="checkbox" id="humanCheck">
+                            <span class="captcha-box"></span>
+                            <span class="captcha-label">I'm not a robot</span>
+                            <span class="captcha-branding">Cook Smart<br>Solutions</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top: 1rem;">
                         Submit Request <span class="arrow">→</span>
                     </button>
                 </form>
@@ -131,6 +144,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+        const formLoadTime = Date.now();
+
         // ——— Flatpickr (weekends only) ———
         flatpickr("#appointmentDate", {
             minDate: "today",
@@ -143,14 +158,29 @@
         document.getElementById('contactForm').addEventListener('submit', async function (event) {
             event.preventDefault();
             const form = event.target;
-            const data = {};
-            new FormData(form).forEach((v, k) => data[k] = v);
-
-            const submitButton = form.querySelector('button[type="submit"]');
             const messageElement = document.getElementById('formMessage');
 
+            // Honeypot check — bots fill hidden fields, humans don't
+            if (document.getElementById('hpWebsite').value) return;
+
+            // Timing check — bots submit instantly
+            if (Date.now() - formLoadTime < 3000) return;
+
+            // Human checkbox check
+            if (!document.getElementById('humanCheck').checked) {
+                messageElement.innerHTML = '<div class="alert alert-danger">Please check the "I\'m not a robot" box before submitting.</div>';
+                document.getElementById('humanCheck').closest('.captcha-row').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            const data = {};
+            new FormData(form).forEach((v, k) => { if (k !== 'website') data[k] = v; });
+
+            const firstName = data.FirstName || 'there';
+            const apptDate  = data.AppointmentDate || '';
+
+            const submitButton = form.querySelector('button[type="submit"]');
             submitButton.disabled = true;
-            const originalText = submitButton.innerHTML;
             submitButton.innerHTML = 'Sending…';
             messageElement.innerHTML = '<div class="alert alert-info">Processing request…</div>';
 
@@ -164,8 +194,21 @@
                 });
 
                 if (response.ok || response.status === 201) {
-                    messageElement.innerHTML = '<div class="alert alert-success">Thank you! Your consultation request has been submitted. We\'ll contact you shortly.</div>';
-                    form.reset();
+                    document.querySelector('.form-card').innerHTML = `
+                        <div class="success-state">
+                            <div class="success-icon-wrap">
+                                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <h2>Request Submitted!</h2>
+                            <p>Thanks, ${firstName}! Your consultation request has been received. JD will reach out within 1 business day to confirm your appointment.</p>
+                            ${apptDate ? `<div class="success-detail">📅 &nbsp;Requested date: <strong>${apptDate}</strong></div>` : ''}
+                            <div class="success-detail">
+                                Need a faster response?<br>
+                                <a href="tel:8173680551" class="success-phone">(817) 368-0551</a>
+                            </div>
+                            <a href="contact.html" class="btn btn-ghost" style="margin-top:1.75rem;">Submit Another Request <span class="arrow">→</span></a>
+                        </div>
+                    `;
                 } else {
                     let errorText = await response.text();
                     let errorMessage = `Submission error (status ${response.status}).`;
@@ -176,14 +219,13 @@
                         errorMessage = `Server error (${response.status}): ${errorText.substring(0, 100)}…`;
                     }
                     messageElement.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
-                    console.error('API Error:', errorText);
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Submit Request <span class="arrow">→</span>';
                 }
             } catch (error) {
                 messageElement.innerHTML = `<div class="alert alert-danger">Network error. Please check your connection and try again.</div>`;
-                console.error('Fetch error:', error);
-            } finally {
                 submitButton.disabled = false;
-                submitButton.innerHTML = originalText;
+                submitButton.innerHTML = 'Submit Request <span class="arrow">→</span>';
             }
         });
     </script>

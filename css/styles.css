@@ -47,7 +47,12 @@ body {
     font-size: 16px;
     line-height: 1.65;
     color: var(--text);
-    background: var(--bg-0);
+    background-color: var(--bg-0);
+    background-image: url('../assets/BackgroundUpdated.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -183,25 +188,15 @@ a:hover { color: #67e8f9; }
     letter-spacing: -0.01em;
 }
 .brand:hover { color: var(--text); }
-.brand-mark {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--grad-primary);
-    display: grid;
-    place-items: center;
-    color: #fff;
-    font-weight: 800;
-    font-size: 1rem;
-    box-shadow: 0 6px 24px var(--accent-glow);
-    position: relative;
-    overflow: hidden;
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.55));
+    transition: filter .3s ease;
+    flex-shrink: 0;
 }
-.brand-mark::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
-    animation: shine 4s ease-in-out infinite;
+.brand:hover .brand-logo {
+    filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.9));
 }
 @keyframes shine { 0%,100%{transform:translateX(-100%);} 50%{transform:translateX(100%);} }
 
@@ -346,7 +341,20 @@ a:hover { color: #67e8f9; }
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-media {
+    margin: 0 auto 2.5rem;
+    max-width: 720px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 50px rgba(34, 211, 238, 0.12);
+}
+.hero-media img {
+    width: 100%;
+    display: block;
 }
 
 .hero-stats {
@@ -431,6 +439,20 @@ a:hover { color: #67e8f9; }
 }
 .service-card:hover { transform: translateY(-6px); border-color: var(--border-strong); box-shadow: var(--shadow), var(--shadow-glow); }
 .service-card:hover::before { opacity: 1; }
+
+.service-card-img {
+    display: block;
+    width: calc(100% + 4rem);
+    margin: -2rem -2rem 1.5rem;
+    height: 190px;
+    object-fit: cover;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    filter: brightness(0.75) saturate(1.15);
+    transition: filter .35s ease;
+}
+.service-card:hover .service-card-img {
+    filter: brightness(0.88) saturate(1.25);
+}
 
 .service-icon {
     width: 52px; height: 52px;
@@ -594,6 +616,41 @@ a:hover { color: #67e8f9; }
 .flatpickr-day:hover { background: var(--surface-hover) !important; }
 .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover { color: var(--text-dim) !important; opacity: 0.3 !important; }
 .flatpickr-prev-month, .flatpickr-next-month { fill: var(--text) !important; color: var(--text) !important; }
+
+/* ——— Catch-all banner ——— */
+.catch-all-banner {
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.catch-all-banner p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+}
+.catch-all-banner strong { color: var(--text); }
+
+/* ——— Brand card showcase ——— */
+.brand-card-wrap {
+    margin: 2.5rem 0 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 40px rgba(34, 211, 238, 0.08);
+}
+.brand-card-wrap img {
+    width: 100%;
+    display: block;
+}
 
 /* ——— About / content blocks ——— */
 .content-block { max-width: 820px; margin: 0 auto; }
